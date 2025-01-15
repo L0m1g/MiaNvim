@@ -45,4 +45,9 @@ return {
             require("config.nvim-cmp")
         end,
     },
+    -- black : Formatage de python
+    {
+        "psf/black",
+        build = ":BlackUpgrade",
+    }
 }

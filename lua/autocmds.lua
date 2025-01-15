@@ -1,34 +1,35 @@
--- Charge automatiquement la config du type de fichier
-vim.api.nvim_create_autocmd("FileType", {
+-- 🚀 Auto-chargement de tous les fichiers dans lua/filetype/
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile", "FileType" }, {
     pattern = "*",
     callback = function()
-        local ft = vim.bo.filetype
-        local config_path = vim.fn.stdpath("config") .. "/lua/filetype/" .. ft .. ".lua"
+        vim.defer_fn(function()
+            local ft = vim.bo.filetype
+            local file = vim.fn.stdpath("config") .. "/lua/filetype/" .. ft .. ".lua"
 
-        -- 🔎 On charge uniquement si le fichier existe
-        if vim.fn.filereadable(config_path) == 1 then
-            dofile(config_path)
-            print("✅ Chargé : " .. config_path)
-        else
-            -- ✅ Plus besoin d'afficher les erreurs
-            -- print("🔍 Aucun fichier pour : " .. ft)
-        end
-    end,
-})
--- 🔒 Forcer l'indentation à 4 espaces pour Lua
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = "lua",
-    callback = function()
-        vim.opt_local.expandtab = true
-        vim.opt_local.shiftwidth = 4
-        vim.opt_local.tabstop = 4
-        vim.opt_local.softtabstop = 4
+            -- 🔍 Afficher le chemin exact
+            print("🔎 Tentative de chargement : " .. file)
+
+            -- Chargement du fichier si présent
+            if vim.fn.filereadable(file) == 1 then
+                vim.cmd("source " .. file)
+                print("✅ Fichier chargé : " .. file)
+            else
+                print("❌ Fichier introuvable : " .. file)
+            end
+        end, 100)
     end,
 })
 
 -- Redimensionne les fenêtres lors du redimensionnement du terminal
 vim.api.nvim_create_autocmd("VimResized", {
-	group = vim.api.nvim_create_augroup("win_autoresize", { clear = true }),
-	desc = "Auto-resize windows on resizing operation",
-	command = "wincmd =",
+    group = vim.api.nvim_create_augroup("win_autoresize", { clear = true }),
+    desc = "Auto-resize windows on resizing operation",
+    command = "wincmd =",
+})
+
+-- 🔎 Désactive le highlight après la recherche
+vim.api.nvim_create_autocmd("InsertEnter", {
+    callback = function()
+        vim.cmd("nohlsearch")
+    end,
 })

@@ -1,5 +1,5 @@
 require("toggleterm").setup({
-    size = 15,               -- Taille du terminal
+    size = 5,               -- Taille du terminal
     open_mapping = [[<C-t>]], -- Raccourci pour ouvrir le terminal
     hide_numbers = true,     -- Cacher les numéros de ligne
     shade_filetypes = {},

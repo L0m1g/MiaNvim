@@ -1,5 +1,20 @@
-vim.opt_local.tabstop = 4
-vim.opt_local.shiftwidth = 4
-vim.opt_local.softtabstop = 4
-vim.opt_local.expandtab = true
-vim.opt_local.smartindent = true
+-- 🔒 Indentation verrouillée à 4 espaces
+vim.bo.expandtab = true      -- Remplace les tabs par des espaces
+vim.bo.shiftwidth = 4        -- Indentation : 4 espaces
+vim.bo.tabstop = 4           -- Largeur d'une tabulation : 4
+vim.bo.softtabstop = 4       -- Tabulation en édition : 4
+vim.bo.autoindent = true     -- Copie l’indentation précédente
+vim.bo.smartindent = true    -- Indentation intelligente
+--print("✅ Indentation Lua appliquée !")
+
+-- LSP Lua (Neovim)
+require("lspconfig").lua_ls.setup({
+    settings = {
+        Lua = {
+            diagnostics = { globals = { "vim" } },
+            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+        },
+    },
+})
+
+
