@@ -21,11 +21,10 @@ cmp.setup({
     }),
 })
 
--- 💀 Désactiver toutes les suggestions inutiles pour rst
+--  Désactiver toutes les suggestions inutiles pour rst
 vim.api.nvim_create_autocmd({ "BufReadPost", "BufWinEnter", "FileType" }, {
     pattern = "rst",
     callback = function()
-        print("🚫 Suppression totale des suggestions inutiles pour rst")
         require("cmp").setup.buffer({
             sources = {
                 { name = "nvim_lsp" },  -- Suggestions du LSP uniquement

@@ -20,7 +20,7 @@ local function toggle_nvim_tree_and_zen()
     end
 end
 
-vim.keymap.set("n", "<Leader>e", toggle_nvim_tree_and_zen, { noremap = true, silent = true })
+vim.keymap.set("n", "<Leader>e", toggle_nvim_tree_and_zen, { noremap = true, silent = true , desc= " NvimTree"})
 vim.keymap.set("n", "<Leader>r", ":lua ReloadConfig()<CR>", { noremap = true, silent = true })
 
 -- 🔄 Navigation entre buffers en mode NORMAL

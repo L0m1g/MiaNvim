@@ -6,7 +6,6 @@ require("zen-mode").setup({
             signcolumn = "no",
             number = false,
             relativenumber = false,
-            --                        cursorline = false,
         },
     },
     plugins = {

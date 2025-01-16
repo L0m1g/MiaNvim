@@ -12,5 +12,5 @@ codewindow.setup({
 -- Raccourci pour toggle la minimap
 vim.keymap.set("n", "<leader>m", function()
     codewindow.toggle_minimap()
-end, { desc = "🗺️ Basculer la minimap" })
+end, { desc = " Basculer la minimap" })
 
