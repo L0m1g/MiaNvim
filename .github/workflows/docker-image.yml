@@ -23,9 +23,21 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
+      - name:  Scan Docker Image for Vulnerabilities
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/mianvim:latest
+          format: table
+          severity: CRITICAL,HIGH
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/mianvim:latest
+
+      - name: ✅ Test Docker Image
+        run: |
+          docker run --rm ${{ secrets.DOCKER_USERNAME }}/mianvim:latest nvim --version
+          docker run --rm ${{ secrets.DOCKER_USERNAME }}/mianvim:latest nvim --headless "+Lazy! sync" +qa
